@@ -1,0 +1,1 @@
+include(${CMAKE_SOURCE_DIR}/third-party/ncurses-6.3/dependencies.cmake)
