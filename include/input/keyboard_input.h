@@ -19,7 +19,7 @@ enum keys
     Escape,
     Enter,
     Backspace,
-    Tab,
+    Tab, S_Tab,
     Up, Down, Left, Right,
     Home, End, PageUp, PageDown,
     Insert, Delete,
