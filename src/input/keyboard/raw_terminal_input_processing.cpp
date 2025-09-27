@@ -1,18 +1,19 @@
-#include "input/raw_terminal_input_processing.h"
+#include "input/keyboard/raw_terminal_input_processing.h"
 
-#include "input/keyboard_input.h"
+#include "input/keyboard/raw_terminal_input_processing.h"
+
 
 #include <unistd.h>
 
-namespace input
+namespace input::keyboard
 {
 
-keyboard_input raw_terminal_input_processing::get_keyboard_input()
+keyboard_input raw_terminal_input_processing::get_keyboard_input() const
 {
     char input_buffer[3];
     auto n = read(STDIN_FILENO, &input_buffer[0], 1);
     char input = input_buffer[0];
-        
+
     if (input == 8 || input == 127) return keyboard_input(keys::Backspace);
     if (input == 9) return keyboard_input(keys::Tab);
     if (input == '\x0A' || input == '\x0D') return keyboard_input(keys::Enter);
@@ -23,8 +24,8 @@ keyboard_input raw_terminal_input_processing::get_keyboard_input()
     {
         return keyboard_input(keys::Char, input);
     }
-    
-    if (input == '\xb1') 
+
+    if (input == '\xb1')
     {
         if(read(STDIN_FILENO, &input_buffer[1], 1) == -1) return keyboard_input(keys::Escape);
         if(read(STDIN_FILENO, &input_buffer[2], 1) == -1) return keyboard_input(keys::Escape);
@@ -44,5 +45,6 @@ keyboard_input raw_terminal_input_processing::get_keyboard_input()
             return keyboard_input(keys::Unknown);
         }
     }
+    return keyboard_input(keys::Unknown);
 }
 }
